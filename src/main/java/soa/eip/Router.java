@@ -10,10 +10,15 @@ public class Router extends RouteBuilder {
 
   @Override
   public void configure() {
-    from(DIRECT_URI)
-      .log("Body contains \"${body}\"")
-      .log("Searching twitter for \"${body}\"!")
-      .toD("twitter-search:${body}")
-      .log("Body now contains the response from twitter:\n${body}");
+    from(DIRECT_URI).process(exchange -> {
+      String body = exchange.getIn().getBody(String.class);
+      String[] splitBody = body.split("max:");
+      String newBody = splitBody[0];
+      if (splitBody.length > 1) {
+        newBody += "?count=" + splitBody[1];
+      }
+      exchange.getOut().setBody(newBody);
+    }).log("Body contains \"${body}\"").log("Searching twitter for \"${body}\"!").toD("twitter-search:${body}")
+        .log("Body now contains the response from twitter:\n${body}");
   }
 }
