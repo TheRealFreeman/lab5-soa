@@ -4,7 +4,7 @@ $(document).ready(function () {
 });
 
 function registerSearch() {
-    $("#search").submit(function (ev) {
+    $("#search").submit(function (event) {
         event.preventDefault();
         $.get($(this).attr('action'), {q: $("#q").val()}, function (data) {
             $("#resultsBlock").html(Mustache.render(template, data));

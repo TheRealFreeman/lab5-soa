@@ -16,8 +16,12 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
     compile("org.apache.camel.springboot:camel-spring-boot-starter:3.6.0")
     compile("org.apache.camel.springboot:camel-twitter-starter:3.6.0")
+    compile("org.apache.camel.springboot:camel-websocket-jsr356-starter:3.6.0")
     compile("org.webjars.bowergithub.twbs:bootstrap:3.3.7")
     compile("org.webjars.bowergithub.janl:mustache.js:3.0.1")
+    compile("org.asynchttpclient:async-http-client:2.11.0")
+    compile("org.apache.camel:camel-test:3.6.0")
+    compile("org.apache.camel:camel-websocket:3.6.0")
 }
 
 task zip(type: Zip) {
