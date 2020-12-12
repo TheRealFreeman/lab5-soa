@@ -1,4 +1,18 @@
+let openConnection = false;
+const socket = new WebSocket('ws://localhost:50000/twitterWS'); // assuming you have your ws enpdoint there.
+
 $(document).ready(function () {
+
+    socket.addEventListener('open', function (event) {
+        console.log("Connection opened");
+        openConnection = true;
+    });
+
+    socket.addEventListener('message', function (event) {
+        // event.data contains the tweets
+        $("#resultsBlock").html(Mustache.render(template, event.data));
+
+    });
     registerSearch();
     registerTemplate();
 });
@@ -6,9 +20,9 @@ $(document).ready(function () {
 function registerSearch() {
     $("#search").submit(function (event) {
         event.preventDefault();
-        $.get($(this).attr('action'), {q: $("#q").val()}, function (data) {
-            $("#resultsBlock").html(Mustache.render(template, data));
-        });
+        if (openConnection) {
+            socket.send($("#q").val());
+        }
     });
 }
 
