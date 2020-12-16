@@ -10,7 +10,7 @@ $(document).ready(function () {
 
     socket.addEventListener('message', function (event) {
         // event.data contains the tweets
-        $("#resultsBlock").html(Mustache.render(template, event.data));
+        $("#resultsBlock").html(Mustache.render(template, JSON.parse(event.data))); // String to JSON
 
     });
     registerSearch();
